@@ -1,5 +1,5 @@
-import {recipesRoutes} from './recipes';
+import recipeRouter from './recipes';
 
 export const setupRoutes = app => {
-    recipesRoutes(app);
+    app.use('/recipes', recipeRouter);
 };

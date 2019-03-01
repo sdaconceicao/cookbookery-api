@@ -1,29 +1,34 @@
-export const recipesRoutes = app => {
-    app.get('/recipes', (request, response) => {
-        response.status(200).send({
+import {Router} from 'express';
+
+const recipeRouter = Router();
+
+recipeRouter
+    .get('/', (req, res) => {
+        res.status(200).send({
             data: []
         });
-    });
-    app.get('/recipes/:id', (request, response) => {
-        response.status(200).send({
+    })
+    .get('/:id', (req, res) => {
+        res.status(200).send({
             data: {}
         });
-    });
-    app.post('/recipes/', (request, response) => {
-        response.status(200).send({
+    })
+    .post('/', (req, res) => {
+        res.status(200).send({
             data: {}
         });
-    });
-    app.put('/recipes/:id', (request, response) => {
-        response.status(200).send({
+    })
+    .put('/:id', (req, res) => {
+        res.status(200).send({
             data: {}
         });
-    });
-    app.delete('/recipes/:id', (request, response) => {
-        response.status(200).send({
+    })
+    .delete('/:id', (req, res) => {
+        res.status(200).send({
             data: {
                 message: `Recipe ${request.params.id} successfully deleted`
             }
         });
     });
-};
+
+export default recipeRouter;
