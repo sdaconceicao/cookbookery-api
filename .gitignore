@@ -1,6 +1,7 @@
-# Intellij/IDE
+# Intellij/Misc
 ##############
 .idea
+.env
 
 # Compiled source #
 ###################

@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import minimist from 'minimist';
+import logger from 'morgan';
 
 import {setupRoutes} from './routes';
 
@@ -8,6 +9,7 @@ const app = express(),
     args = process.argv.slice(2),
     port = minimist(args).port || 3000;
 
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true,

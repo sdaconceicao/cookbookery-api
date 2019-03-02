@@ -1,16 +1,24 @@
 import {Router} from 'express';
 
-const recipeRouter = Router();
+import {Recipe} from "../models";
 
-recipeRouter
+const RecipeRouter = Router();
+
+RecipeRouter
     .get('/', (req, res) => {
-        res.status(200).send({
-            data: []
-        });
+        Recipe.findAll().then(recipes => {
+            res.status(200).send({
+                data: recipes
+            });
+        })
     })
     .get('/:id', (req, res) => {
-        res.status(200).send({
-            data: {}
+        Recipe.findAll({
+            where: {id: req.param.id}
+        }).then(recipe=>{
+            res.status(200).send({
+                data: recipe
+            });
         });
     })
     .post('/', (req, res) => {
@@ -31,4 +39,4 @@ recipeRouter
         });
     });
 
-export default recipeRouter;
+export default RecipeRouter;
