@@ -30,20 +30,42 @@ RecipeRouter
         })
     })
     .post('/', (req, res) => {
-        res.status(200).send({
-            data: {}
-        });
+        Recipes.create(req.body).then(recipe => {
+            res.status(200).send({
+                data: recipe
+            });
+        }).catch(error => {
+            res.status(500).send({
+                error
+            })
+        })
     })
     .put('/:id', (req, res) => {
-        res.status(200).send({
-            data: {}
-        });
+        Recipes.update(req.body, {
+            where: {id: req.params.id}
+        }).then(recipe => {
+            res.status(200).send({
+                data: recipe
+            });
+        }).catch(error => {
+            res.status(500).send({
+                error
+            })
+        })
     })
     .delete('/:id', (req, res) => {
-        res.status(200).send({
-            data: {
-                message: `Recipe ${request.params.id} successfully deleted`
-            }
+        Recipes.destroy({
+            where: {id: req.params.id}
+        }).then(()=>{
+            res.status(200).send({
+                data: {
+                    message: `Recipe ${request.params.id} successfully deleted`
+                }
+            });
+        }).catch(error=>{
+            res.status(500).send({
+                error
+            })
         });
     });
 
