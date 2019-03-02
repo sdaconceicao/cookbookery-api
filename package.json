@@ -36,6 +36,8 @@
     "@babel/preset-env": "^7.3.4",
     "eslint": "^5.14.1",
     "eslint-plugin-node": "^8.0.1",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "sequelize-auto-migrations": "^1.0.3",
+    "sequelize-cli": "^5.4.0"
   }
 }

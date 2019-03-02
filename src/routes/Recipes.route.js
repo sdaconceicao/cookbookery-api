@@ -1,25 +1,33 @@
 import {Router} from 'express';
 
-import {Recipe} from "../models";
+import {Recipes} from "../models";
 
 const RecipeRouter = Router();
 
 RecipeRouter
     .get('/', (req, res) => {
-        Recipe.findAll().then(recipes => {
+        Recipes.findAll().then(recipes => {
             res.status(200).send({
                 data: recipes
-            });
+            })
+        }).catch(error=>{
+            res.status(500).send({
+                error
+            })
         })
     })
     .get('/:id', (req, res) => {
-        Recipe.findAll({
-            where: {id: req.param.id}
+        Recipes.findAll({
+            where: {id: req.params.id}
         }).then(recipe=>{
             res.status(200).send({
                 data: recipe
             });
-        });
+        }).catch(error=>{
+            res.status(500).send({
+                error
+            })
+        })
     })
     .post('/', (req, res) => {
         res.status(200).send({

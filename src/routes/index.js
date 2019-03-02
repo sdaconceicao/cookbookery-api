@@ -1,5 +1,5 @@
-import recipeRouter from './recipes';
+import RecipesRouter from './Recipes.route';
 
 export const setupRoutes = app => {
-    app.use('/recipes', recipeRouter);
+    app.use('/recipes', RecipesRouter);
 };

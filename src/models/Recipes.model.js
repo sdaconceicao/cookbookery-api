@@ -1,6 +1,6 @@
 import Sequelize, {Model} from 'sequelize';
 
-export default class Recipe extends Model {
+export default class Recipes extends Model {
     static init(sequelize) {
         return super.init({
             title: {
@@ -28,4 +28,20 @@ export default class Recipe extends Model {
             }
         }, {sequelize})
     };
+
+    static associate(models) {
+        this.hasMany(models.Ingredients, {
+            onDelete: "CASCADE",
+            foreignKey: {
+                allowNull: false
+            }
+        });
+        this.hasMany(models.Steps, {
+            onDelete: "CASCADE",
+            foreignKey: {
+                allowNull: false
+            }
+        });
+        this.hasMany(models.Tags);
+    }
 };
