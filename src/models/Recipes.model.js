@@ -32,16 +32,20 @@ export default class Recipes extends Model {
     static associate(models) {
         this.hasMany(models.Ingredients, {
             onDelete: "CASCADE",
+            as: 'ingredients',
             foreignKey: {
                 allowNull: false
             }
         });
         this.hasMany(models.Steps, {
             onDelete: "CASCADE",
+            as: 'steps',
             foreignKey: {
                 allowNull: false
             }
         });
-        this.hasMany(models.Tags);
+        this.hasMany(models.Tags, {
+            as: 'tags'
+        });
     }
 };

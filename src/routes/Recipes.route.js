@@ -17,7 +17,8 @@ RecipeRouter
         })
     })
     .get('/:id', (req, res) => {
-        Recipes.findById(req.params.id).then(recipe=>{
+        Recipes.findById(req.params.id, {
+            include: ['ingredients', 'steps', 'tags']}).then(recipe=>{
             res.status(200).send({
                 ...recipe.dataValues
             });
