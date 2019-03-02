@@ -8,7 +8,7 @@ RecipeRouter
     .get('/', (req, res) => {
         Recipes.findAll().then(recipes => {
             res.status(200).send({
-                data: recipes
+                recipes
             })
         }).catch(error=>{
             res.status(500).send({
@@ -17,11 +17,9 @@ RecipeRouter
         })
     })
     .get('/:id', (req, res) => {
-        Recipes.findAll({
-            where: {id: req.params.id}
-        }).then(recipe=>{
+        Recipes.findById(req.params.id).then(recipe=>{
             res.status(200).send({
-                data: recipe
+                ...recipe.dataValues
             });
         }).catch(error=>{
             res.status(500).send({
@@ -32,7 +30,7 @@ RecipeRouter
     .post('/', (req, res) => {
         Recipes.create(req.body).then(recipe => {
             res.status(200).send({
-                data: recipe
+                ...recipe
             });
         }).catch(error => {
             res.status(500).send({
@@ -45,7 +43,7 @@ RecipeRouter
             where: {id: req.params.id}
         }).then(recipe => {
             res.status(200).send({
-                data: recipe
+                ...recipe
             });
         }).catch(error => {
             res.status(500).send({
@@ -58,9 +56,7 @@ RecipeRouter
             where: {id: req.params.id}
         }).then(()=>{
             res.status(200).send({
-                data: {
-                    message: `Recipe ${request.params.id} successfully deleted`
-                }
+                message: `Recipe ${request.params.id} successfully deleted`
             });
         }).catch(error=>{
             res.status(500).send({

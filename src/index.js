@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import minimist from 'minimist';
 import logger from 'morgan';
 
@@ -10,6 +11,7 @@ const app = express(),
     port = minimist(args).port || 3000;
 
 app.use(logger('dev'));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true,
