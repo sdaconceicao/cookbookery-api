@@ -11,4 +11,3 @@ const env = process.env.NODE_ENV || "development",
 getModels('../src/models', sequelize);
 
 sequelize.sync();
-sequelize.sync({force: true});
