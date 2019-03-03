@@ -7,7 +7,7 @@
     "start": "nodemon --exec babel-node src/index.js --port=3001",
     "build": "babel src --out-dir dist",
     "serve": "node dist/index.js",
-    "db:setup": "node --exec babel-node scripts/db.setup.js"
+    "db:setup": "nodemon --exec babel-node scripts/db.setup.js"
   },
   "repository": {
     "type": "git",
@@ -35,6 +35,8 @@
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
     "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.2.0",
     "@babel/preset-env": "^7.3.4",
     "eslint": "^5.14.1",
     "eslint-plugin-node": "^8.0.1",

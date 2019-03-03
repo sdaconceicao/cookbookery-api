@@ -9,4 +9,9 @@ export default class Tags extends Model {
             }
         }, {sequelize})
     };
+    static associate(models) {
+        this.belongsToMany(models.Recipes, {
+            through: 'RecipeTags'
+        });
+    }
 };

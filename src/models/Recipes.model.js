@@ -44,7 +44,8 @@ export default class Recipes extends Model {
                 allowNull: false
             }
         });
-        this.hasMany(models.Tags, {
+        this.belongsToMany(models.Tags, {
+            through: 'RecipeTags',
             as: 'tags'
         });
     }

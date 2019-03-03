@@ -1,0 +1,1 @@
+export * as RecipesController from './Recipes.controller';
