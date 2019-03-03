@@ -1,13 +1,13 @@
-import {Recipes} from "../models";
+import {RecipesService} from '../services'
 
 /**
  * Retrieve all recipes with filters and pagination
  * @param req
  * @param res
  */
-export function getAll(req, res){
+export function loadList(req, res){
     //TODO filters and pagination
-    Recipes.findAll().then(recipes => {
+    RecipesService.loadList().then(recipes => {
         res.status(200).send({
             recipes
         })
@@ -23,10 +23,8 @@ export function getAll(req, res){
  * @param req
  * @param res
  */
-export function getOne(req, res){
-    Recipes.findById(req.params.id, {
-        include: ['ingredients', 'steps', 'tags']
-    }).then(recipe=>{
+export function load(req, res){
+    RecipesService.load(req.params.id).then(recipe=>{
         res.status(200).send({
             ...recipe.dataValues
         });
@@ -44,9 +42,7 @@ export function getOne(req, res){
  */
 export function create(req, res){
     //TODO handle associations and image uploads
-    Recipes.create(req.body, {
-        returning: true
-    }).then(result => {
+    RecipesService.create(req.body).then(result => {
         res.status(200).send({
             ...result.dataValues
         });
@@ -65,10 +61,7 @@ export function create(req, res){
  */
 export function update(req, res){
     //TODO handle associations and image uploads
-    Recipes.update(req.body, {
-        where: {id: req.params.id},
-        returning: true
-    }).then(result => {
+    RecipesService.update(req.body).then(result => {
         res.status(200).send({
             ...result[1][0].dataValues
         });
@@ -85,9 +78,7 @@ export function update(req, res){
  * @param res
  */
 export function remove(req, res){
-    Recipes.destroy({
-        where: {id: req.params.id}
-    }).then(()=>{
+    RecipesService.remove(req.params.id).then(()=>{
         res.status(200).send({
             message: `Recipe ${req.params.id} successfully deleted`
         });
