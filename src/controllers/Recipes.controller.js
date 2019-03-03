@@ -1,4 +1,4 @@
-import {RecipesService} from '../services'
+import {RecipesService, IngredientsService, StepsService} from '../services'
 
 /**
  * Retrieve all recipes with filters and pagination
@@ -41,8 +41,10 @@ export function load(req, res){
  * @param res
  */
 export function create(req, res){
-    //TODO handle associations and image uploads
+    //TODO image uploads
     RecipesService.create(req.body).then(result => {
+        IngredientsService.addIngredientsToRecipe(result.dataValues.id, req.ingredients);
+        StepsService.addStepsToRecipe(result.dataValues.id, req.steps);
         res.status(200).send({
             ...result.dataValues
         });
@@ -60,8 +62,10 @@ export function create(req, res){
  * @param res
  */
 export function update(req, res){
-    //TODO handle associations and image uploads
+    //TODO image uploads
     RecipesService.update(req.body).then(result => {
+        IngredientsService.addIngredientsToRecipe(result[1][0].dataValues.id, req.body.ingredients);
+        StepsService.addStepsToRecipe(result[1][0].dataValues.id, req.body.steps);
         res.status(200).send({
             ...result[1][0].dataValues
         });
