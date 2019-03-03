@@ -44,11 +44,14 @@ export function getOne(req, res){
  */
 export function create(req, res){
     //TODO handle associations and image uploads
-    Recipes.create(req.body).then(recipe => {
+    Recipes.create(req.body, {
+        returning: true
+    }).then(result => {
         res.status(200).send({
-            ...recipe
+            ...result.dataValues
         });
     }).catch(error => {
+        console.error(error);
         res.status(500).send({
             error
         })
@@ -63,10 +66,11 @@ export function create(req, res){
 export function update(req, res){
     //TODO handle associations and image uploads
     Recipes.update(req.body, {
-        where: {id: req.params.id}
-    }).then(recipe => {
+        where: {id: req.params.id},
+        returning: true
+    }).then(result => {
         res.status(200).send({
-            ...recipe
+            ...result[1][0].dataValues
         });
     }).catch(error => {
         res.status(500).send({
@@ -85,7 +89,7 @@ export function remove(req, res){
         where: {id: req.params.id}
     }).then(()=>{
         res.status(200).send({
-            message: `Recipe ${request.params.id} successfully deleted`
+            message: `Recipe ${req.params.id} successfully deleted`
         });
     }).catch(error=>{
         res.status(500).send({
