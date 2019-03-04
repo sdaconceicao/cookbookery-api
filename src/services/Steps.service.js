@@ -7,8 +7,13 @@ export function removeStepsFromRecipe(recipeId){
 }
 
 export function addStepsToRecipe(recipeId, steps){
-    return removeStepsFromRecipe(recipeId).then(()=>{
-        steps.forEach((step) =>{ step.RecipeId = recipeId; });
-        return Steps.bulkCreate(steps);
-    })
+    return new Promise(resolve=>{
+        removeStepsFromRecipe(recipeId).then(()=>{
+            if(steps){
+                steps.forEach((step) =>{ step.RecipeId = recipeId; });
+                Steps.bulkCreate(steps);
+            }
+            resolve(true);
+        })
+    });
 }

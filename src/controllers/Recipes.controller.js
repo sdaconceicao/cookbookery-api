@@ -7,7 +7,7 @@ import {RecipesService, IngredientsService, StepsService} from '../services'
  */
 export function loadList(req, res){
     //TODO filters and pagination
-    RecipesService.loadList().then(recipes => {
+    RecipesService.loadList(req.params.filters).then(recipes => {
         res.status(200).send({
             recipes
         })
@@ -42,11 +42,9 @@ export function load(req, res){
  */
 export function create(req, res){
     //TODO image uploads
-    RecipesService.create(req.body).then(result => {
-        IngredientsService.addIngredientsToRecipe(result.dataValues.id, req.ingredients);
-        StepsService.addStepsToRecipe(result.dataValues.id, req.steps);
+    RecipesService.create(req.body).then(recipe => {
         res.status(200).send({
-            ...result.dataValues
+            ...recipe
         });
     }).catch(error => {
         console.error(error);
@@ -63,11 +61,9 @@ export function create(req, res){
  */
 export function update(req, res){
     //TODO image uploads
-    RecipesService.update(req.body).then(result => {
-        IngredientsService.addIngredientsToRecipe(result[1][0].dataValues.id, req.body.ingredients);
-        StepsService.addStepsToRecipe(result[1][0].dataValues.id, req.body.steps);
+    RecipesService.update(req.body).then(recipe => {
         res.status(200).send({
-            ...result[1][0].dataValues
+            ...recipe
         });
     }).catch(error => {
         res.status(500).send({
