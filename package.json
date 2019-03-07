@@ -14,7 +14,7 @@
     "url": "git+https://github.com/sdaconceicao/cookbookery-api.git"
   },
   "author": "Stephen da Conceicao",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/sdaconceicao/cookbookery-api/issues"
   },
