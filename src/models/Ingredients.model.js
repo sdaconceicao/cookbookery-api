@@ -1,12 +1,14 @@
-import Sequelize, {Model} from 'sequelize';
+import Sequelize from 'sequelize';
 
-export default class Ingredients extends Model {
-    static init(sequelize) {
-        return super.init({
-            desc: {
-                type: Sequelize.TEXT,
-                allowNull: false,
-            }
-        }, {sequelize})
-    };
+export default (sequelize) => {
+    const Ingredients = sequelize.define('Ingredients', {
+        desc: {
+            type: Sequelize.TEXT,
+            allowNull: false,
+        }
+    });
+    return Ingredients;
 };
+
+
+

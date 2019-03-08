@@ -3,13 +3,21 @@ import {IngredientsService, StepsService, TagsService} from "./index";
 import {saveImage} from "../helpers/files";
 
 export function loadList(filters){
-    return Recipes.findAll();
+    return Recipes.findAll({
+        include: ['ingredients', 'steps', 'tags']
+    });
 }
 
 export function load(id){
-    return Recipes.findById(id, {
-        include: ['ingredients', 'steps', 'tags']
-    })
+    return new Promise(resolve=> {
+        return Recipes.findAll({ //TODO findById is missing virtual fields, only all method picking fields up
+            where: {id: id},
+            include: ['ingredients', 'steps', 'tags']
+        }).then(results=>{
+            const result = JSON.parse(JSON.stringify(results));
+            resolve(result[0])
+        });
+    });
 }
 
 export function create(recipe){

@@ -26,9 +26,10 @@ export function loadList(req, res){
 export function load(req, res){
     RecipesService.load(req.params.id).then(recipe=>{
         res.status(200).send({
-            ...recipe.dataValues
+            ...recipe
         });
     }).catch(error=>{
+        console.error(error);
         res.status(500).send({
             error
         })

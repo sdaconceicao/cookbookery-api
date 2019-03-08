@@ -1,52 +1,61 @@
-import Sequelize, {Model} from 'sequelize';
+import Sequelize from 'sequelize';
 
-export default class Recipes extends Model {
-    static init(sequelize) {
-        return super.init({
-            title: {
-                type: Sequelize.STRING,
-                allowNull: false,
-            },
-            desc: {
-                type: Sequelize.TEXT,
-                allowNull: false,
-            },
-            image: {
-                type: Sequelize.STRING
-            },
-            servingSize: {
-                type: Sequelize.INTEGER,
-                allowNull: false
-            },
-            prepTime: {
-                type: Sequelize.INTEGER,
-                allowNull: false
-            },
-            cookTime: {
-                type: Sequelize.INTEGER,
-                allowNull: false
+export default (sequelize) => {
+    const Recipes = sequelize.define('Recipes', {
+        title: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        desc: {
+            type: Sequelize.TEXT,
+            allowNull: false,
+        },
+        image: {
+            type: Sequelize.STRING,
+        },
+        servingSize: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
+        prepTime: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
+        cookTime: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
+        imageFullPath:{
+            type: Sequelize.VIRTUAL,
+            get: function() {
+                return this.getDataValue('image')
+                    ? `http://localhost:3001/${this.getDataValue('image')}`
+                    : null
             }
-        }, {sequelize})
-    };
 
-    static associate(models) {
-        this.hasMany(models.Ingredients, {
+        }
+    });
+
+    Recipes.setAssociations = (models)=> {
+        Recipes.hasMany(models.Ingredients, {
             onDelete: "CASCADE",
             as: 'ingredients',
             foreignKey: {
                 allowNull: false
             }
         });
-        this.hasMany(models.Steps, {
+        Recipes.hasMany(models.Steps, {
             onDelete: "CASCADE",
             as: 'steps',
             foreignKey: {
                 allowNull: false
             }
         });
-        this.belongsToMany(models.Tags, {
+        Recipes.belongsToMany(models.Tags, {
             through: 'RecipeTags',
             as: 'tags'
         });
-    }
+    };
+
+    return Recipes;
 };
