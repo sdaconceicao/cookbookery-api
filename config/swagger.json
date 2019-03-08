@@ -364,7 +364,7 @@
             "type": "number",
             "example": 1
           },
-          "name": {
+          "desc": {
             "type": "string",
             "example": "Boil pasta for 5 minutes"
           }
@@ -380,7 +380,7 @@
             "type": "number",
             "example": 1
           },
-          "name": {
+          "desc": {
             "type": "string",
             "example": "Pasta"
           }

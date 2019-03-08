@@ -1,5 +1,6 @@
 import {Recipes} from "../models";
 import {IngredientsService, StepsService, TagsService} from "./index";
+import {saveImage} from "../helpers/files";
 
 export function loadList(filters){
     return Recipes.findAll();
@@ -13,12 +14,17 @@ export function load(id){
 
 export function create(recipe){
     return new Promise(resolve=>{
-        Recipes.create(recipe, {
-            returning: true
-        }).then(result=>{
-            saveAssociations(result.dataValues.id, recipe.ingredients, recipe.steps, recipe.tags).then(()=>{
-                resolve(result.dataValues);
-            })
+        saveImage(recipe.image, 'public/img').then((imageLocation)=> {
+            if (imageLocation) {
+                recipe.image = imageLocation.substr(imageLocation.indexOf('img/'));
+            }
+            Recipes.create(recipe, {
+                returning: true
+            }).then(result => {
+                saveAssociations(result.dataValues.id, recipe.ingredients, recipe.steps, recipe.tags).then(() => {
+                    resolve(result.dataValues);
+                })
+            });
         });
     });
 }
@@ -31,14 +37,20 @@ export function remove(id){
 
 export function update(recipe){
     return new Promise(resolve=>{
-        Recipes.update(recipe, {
-            where: {id: recipe.id},
-            returning: true
-        }).then(result=>{
-            saveAssociations(result[1][0].dataValues.id, recipe.ingredients, recipe.steps, recipe.tags).then(()=>{
-                resolve(result[1][0].dataValues);
-            })
+        saveImage(recipe.image, 'public/img').then((imageLocation)=>{
+            if(imageLocation){
+                recipe.image = imageLocation.substr(imageLocation.indexOf('img/'));
+            }
+            Recipes.update(recipe, {
+                where: {id: recipe.id},
+                returning: true
+            }).then(result=>{
+                saveAssociations(result[1][0].dataValues.id, recipe.ingredients, recipe.steps, recipe.tags).then(()=>{
+                    resolve(result[1][0].dataValues);
+                })
+            });
         });
+
     });
 }
 
@@ -52,5 +64,4 @@ export function saveAssociations(id, ingredients, steps, tags){
             resolve(true);
         });
     });
-
 }
