@@ -19,7 +19,6 @@ export default (sequelize) => {
             },
 
             set(value){
-                console.log("BARBARA", value);
                 this.setDataValue('image', value
                     ? value.substr(value.indexOf('img/'))
                     : null);
