@@ -4,7 +4,7 @@
   "description": "Rest API for Cookbookery app",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js --port=3001",
+    "start": "nodemon --exec babel-node src/index.js",
     "build": "babel src --out-dir dist",
     "serve": "node dist/index.js",
     "db:setup": "nodemon --exec babel-node scripts/db.setup.js"

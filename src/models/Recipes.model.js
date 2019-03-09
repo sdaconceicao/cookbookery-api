@@ -29,10 +29,9 @@ export default (sequelize) => {
             type: Sequelize.VIRTUAL,
             get: function() {
                 return this.getDataValue('image')
-                    ? `http://localhost:3001/${this.getDataValue('image')}`
+                    ? `http://${process.env.BASE_URL}:${process.env.PORT}/${this.getDataValue('image')}`
                     : null
             }
-
         }
     });
 
