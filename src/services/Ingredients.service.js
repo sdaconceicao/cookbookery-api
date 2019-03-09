@@ -1,4 +1,4 @@
-import {Ingredients, Steps} from "../models";
+import {Ingredients} from "../models";
 
 export function removeIngredientsFromRecipe(recipeId){
     return Ingredients.destroy({

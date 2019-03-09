@@ -2,9 +2,11 @@ import {Recipes} from "../models";
 import {IngredientsService, StepsService, TagsService} from "./index";
 import {saveImage} from "../helpers/files";
 
-export function loadList(filters){
+export function loadList(query){
+    const where = generateWhereFromQuery(query);
+    console.log("WHERE", where);
     return Recipes.findAll({
-        include: ['ingredients', 'steps', 'tags']
+        where
     });
 }
 
@@ -32,6 +34,18 @@ export function create(recipe){
             });
         });
     });
+}
+
+export function generateWhereFromQuery(query){
+    const where = {};
+    if (!query) return null;
+    if(query.searchQuery){
+        where.$or = [
+            {title: { $iLike: '%' + query.searchQuery + '%' }},
+            {desc: { $iLike: '%' + query.searchQuery + '%' }}
+        ];
+    }
+    return where;
 }
 
 export function remove(id){

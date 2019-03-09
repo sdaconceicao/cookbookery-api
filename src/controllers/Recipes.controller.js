@@ -6,8 +6,8 @@ import {RecipesService, IngredientsService, StepsService} from '../services'
  * @param res
  */
 export function loadList(req, res){
-    //TODO filters and pagination
-    RecipesService.loadList(req.params.filters).then(recipes => {
+    //TODO and pagination
+    RecipesService.loadList(req.query).then(recipes => {
         res.status(200).send({
             recipes
         })
@@ -42,7 +42,6 @@ export function load(req, res){
  * @param res
  */
 export function create(req, res){
-    //TODO image uploads
     RecipesService.create(req.body).then(recipe => {
         res.status(200).send({
             ...recipe
@@ -61,7 +60,6 @@ export function create(req, res){
  * @param res
  */
 export function update(req, res){
-    //TODO image uploads
     RecipesService.update(req.body).then(recipe => {
         res.status(200).send({
             ...recipe
