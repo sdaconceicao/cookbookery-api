@@ -22,10 +22,7 @@ export function load(id){
 
 export function create(recipe){
     return new Promise(resolve=>{
-        saveImage(recipe.image, 'public/img').then((imageLocation)=> {
-            if (imageLocation) {
-                recipe.image = imageLocation.substr(imageLocation.indexOf('img/'));
-            }
+        saveRecipeImage(recipe).then(recipe=> {
             Recipes.create(recipe, {
                 returning: true
             }).then(result => {
@@ -45,10 +42,7 @@ export function remove(id){
 
 export function update(recipe){
     return new Promise(resolve=>{
-        saveImage(recipe.image, 'public/img').then((imageLocation)=>{
-            if(imageLocation){
-                recipe.image = imageLocation.substr(imageLocation.indexOf('img/'));
-            }
+        saveRecipeImage(recipe).then(recipe=>{
             Recipes.update(recipe, {
                 where: {id: recipe.id},
                 returning: true
@@ -72,4 +66,20 @@ export function saveAssociations(id, ingredients, steps, tags){
             resolve(true);
         });
     });
+}
+
+export function saveRecipeImage(recipe) {
+    return new Promise(resolve => {
+        saveImage(recipe.image, 'img').then(imageLocation => {
+            if (imageLocation) {
+                recipe.image = imageLocation;
+            } else if (!recipe.image) {
+                recipe.image = null;
+            }
+        }).catch(error=>{
+            console.error("Error in saving recipe image", error);
+        }).finally(()=>{
+            resolve(recipe);
+        });
+    })
 }

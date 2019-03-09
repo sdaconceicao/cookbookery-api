@@ -8,7 +8,6 @@ import {setupRoutes} from './routes';
 const app = express(),
     port = process.env.PORT;
 
-app.use(logger('dev'));
 app.use(cors());
 app.use(express.static('public'));
 app.use(bodyParser.json({

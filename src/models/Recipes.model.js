@@ -12,6 +12,18 @@ export default (sequelize) => {
         },
         image: {
             type: Sequelize.STRING,
+            get(){
+                return this.getDataValue('image')
+                    ? `http://${process.env.BASE_URL}:${process.env.PORT}/${this.getDataValue('image')}`
+                    : null
+            },
+
+            set(value){
+                console.log("BARBARA", value);
+                this.setDataValue('image', value
+                    ? value.substr(value.indexOf('img/'))
+                    : null);
+            }
         },
         servingSize: {
             type: Sequelize.INTEGER,
@@ -25,14 +37,6 @@ export default (sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false
         },
-        imageFullPath:{
-            type: Sequelize.VIRTUAL,
-            get: function() {
-                return this.getDataValue('image')
-                    ? `http://${process.env.BASE_URL}:${process.env.PORT}/${this.getDataValue('image')}`
-                    : null
-            }
-        }
     });
 
     Recipes.setAssociations = (models)=> {
