@@ -41,8 +41,8 @@ export function generateWhereFromQuery(query){
     if (!query) return null;
     if(query.searchQuery){
         where.$or = [
-            {title: { $iLike: '%' + query.searchQuery + '%' }},
-            {desc: { $iLike: '%' + query.searchQuery + '%' }}
+            {title: { like: '%' + query.searchQuery + '%' }},
+            {desc: { like: '%' + query.searchQuery + '%' }}
         ];
     }
     return where;

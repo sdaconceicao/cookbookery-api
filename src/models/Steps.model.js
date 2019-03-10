@@ -1,14 +1,14 @@
-import Sequelize from 'sequelize';
+import Sequelize, {Model} from 'sequelize';
 
-export default (sequelize) => {
-    const Steps = sequelize.define('Steps', {
-        desc: {
-            type: Sequelize.TEXT,
-            allowNull: false,
-        }
-    });
-    return Steps;
+export default class Steps extends Model {
+    static init(sequelize) {
+        return super.init({
+            desc: {
+                type: 'citext',
+                allowNull: false,
+            }
+        }, {sequelize})
+    };
 };
-
 
 

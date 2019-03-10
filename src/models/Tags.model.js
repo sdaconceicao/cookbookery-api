@@ -1,18 +1,17 @@
-import Sequelize from 'sequelize';
+import Sequelize, {Model} from 'sequelize';
 
-export default (sequelize) => {
-    const Tags = sequelize.define('Tags', {
-        name: {
-            type: Sequelize.STRING,
-            allowNull: false,
-        }
-    });
-    Tags.setAssociations = (models)=> {
-        Tags.belongsToMany(models.Recipes, {
+export default class Tags extends Model {
+    static init(sequelize) {
+        return super.init({
+            name: {
+                type: 'citext',
+                allowNull: false,
+            }
+        }, {sequelize})
+    };
+    static associate(models) {
+        this.belongsToMany(models.Recipes, {
             through: 'RecipeTags'
         });
     }
-    return Tags;
 };
-
-
