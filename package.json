@@ -7,7 +7,7 @@
     "start": "nodemon --exec babel-node src/index.js",
     "build": "babel src --out-dir dist",
     "serve": "node dist/index.js",
-    "db:setup": "nodemon --exec babel-node scripts/db.setup.js"
+    "db:setup": "npx babel-node --presets @babel/preset-env scripts/db.setup.js"
   },
   "repository": {
     "type": "git",

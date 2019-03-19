@@ -5,7 +5,7 @@ Rest API for Cookbookery app. Built with Express.
 
 ## Dev Requires 
 1. [Node 6+](https://nodejs.org/en/download/)
-2. [Postgres 9+](https://www.postgresql.org)
+2. [Postgres 9+](https://www.postgresql.org) with citext extension enabled
 
 ## Setup
 1. npm install
