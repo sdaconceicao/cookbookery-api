@@ -1,6 +1,7 @@
 import {Recipes} from "../models";
 import {IngredientsService, StepsService, TagsService} from "./index";
 import {saveImage} from "../helpers/files";
+import {getComparison} from "../helpers/query";
 
 export function loadList(query){
     const where = generateWhereFromQuery(query);
@@ -44,9 +45,18 @@ export function generateWhereFromQuery(query){
             {title: { like: '%' + query.searchQuery + '%' }},
             {desc: { like: '%' + query.searchQuery + '%' }}
         ];
+        order: [query.orderBy || 'createdAt', query.orderDirection || 'DESC']
+    }
+    if(query.prepTime){
+       where.prepTime = getComparison(query.prepTime, query.prepTimeComparator);
+    }
+    if(query.cookTime){
+        where.cookTime = getComparison(query.cookTime, query.cookTimeComparator);
     }
     return where;
 }
+
+
 
 export function remove(id){
     return Recipes.destroy({
