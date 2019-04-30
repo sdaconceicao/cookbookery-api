@@ -6,8 +6,8 @@ import {TagsService} from '../services';
  * @param res
  */
 export function loadList(req, res){
-    //TODO filters and pagination
-    TagsService.loadList(req.params.filters).then(tags => {
+
+    TagsService.loadList(req.query).then(tags => {
         res.status(200).send({
             tags
         })

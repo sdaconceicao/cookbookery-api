@@ -4,10 +4,8 @@ import {saveImage} from "../helpers/files";
 import {getComparison} from "../helpers/query";
 
 export function loadList(query){
-    const where = generateWhereFromQuery(query);
-    console.log("WHERE", where);
     return Recipes.findAll({
-        where
+        where: generateWhereFromQuery(query)
     });
 }
 

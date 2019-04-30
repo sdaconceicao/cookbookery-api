@@ -1,7 +1,9 @@
 import {Tags, RecipeTags} from '../models';
 
-export function loadList(filters){
-    return Tags.findAll();
+export function loadList(query){
+    return Tags.findAll({
+        where: generateWhereFromQuery(query)
+    });
 }
 
 export function removeTagsFromRecipe(recipeId){
@@ -32,4 +34,13 @@ export function addTagsToRecipe(recipeId, tags){
             resolve(true)
         })
     });
+}
+
+export function generateWhereFromQuery(query){
+    const where = {};
+    if (!query) return null;
+    if(query.searchQuery){
+        where.name =  { like: '%' + query.searchQuery + '%' };
+    }
+    return where;
 }
